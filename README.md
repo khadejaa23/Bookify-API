@@ -3,7 +3,7 @@
 ## Description:
 A RESTful API for managing books, authors, and genres.
 
-##3 Installation:
+## Installation:
 
 ### Clone the repository: ``` git clone https://github.com/khadejaa23/bookify-api.git```
 ### Install dependencies: ```npm install```
