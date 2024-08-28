@@ -1,0 +1,23 @@
+{
+  "name": "Bookify-API",
+  "version": "1.0.0",
+  "description": "## Description: A RESTful API for managing books, authors, and genres.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/khadejaa23/Bookify-API.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/khadejaa23/Bookify-API/issues"
+  },
+  "homepage": "https://github.com/khadejaa23/Bookify-API#readme",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
