@@ -12,6 +12,8 @@ A RESTful API for managing books, authors, and genres.
 #### Install dependencies: 
 
 ```npm install```
+```npm install express```
+```npm install --save-dev mocha chai supertest```
 
 ### Usage:
 
