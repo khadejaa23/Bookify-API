@@ -21,15 +21,6 @@ Make API requests using your preferred HTTP client. For example, to get a list o
 
 ```curl http://localhost:3000/books```
 
-### Contributing:
-Please follow the guidelines in the CONTRIBUTING.md file.
-
-### License:
-```MIT License```
-
-### Acknowledgements:
- Khadija Ezzat | https://github.com/khadejaa23
-
 ### Endpoints:
 ```
 /books: Get a list of books.
@@ -44,3 +35,13 @@ Books: title, author(s), publication date, genre(s), description.
 Authors: name, biography.
 Genres: name.
 ```
+
+### Contributing:
+Please follow the guidelines in the CONTRIBUTING.md file.
+
+### License:
+
+```MIT License```
+
+### Author:
+Khadija Ezzat | https://github.com/khadejaa23
