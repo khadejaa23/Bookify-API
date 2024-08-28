@@ -15,8 +15,10 @@ A RESTful API for managing books, authors, and genres.
 
 ### Usage:
 
-Start the server: npm start
+Start the server: ```npm start```
+
 Make API requests using your preferred HTTP client. For example, to get a list of books:
+
 ```curl http://localhost:3000/books```
 
 ### Contributing:
