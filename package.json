@@ -1,10 +1,11 @@
 {
-  "name": "Bookify-API",
+  "name": "@bookify/api",
   "version": "1.0.0",
   "description": "## Description: A RESTful API for managing books, authors, and genres.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test.js",
+    "start": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
