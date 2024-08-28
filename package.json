@@ -19,10 +19,16 @@
   },
   "homepage": "https://github.com/khadejaa23/Bookify-API#readme",
   "dependencies": {
+    "body-parser": "^1.20.2",
     "express": "^4.19.2",
-    "mongoose": "^8.5.4"
+    "mongoose": "^8.5.4",
+    "nodemon": "^3.1.4"
   },
   "devDependencies": {
+    "@babel/cli": "^7.24.8",
+    "@babel/core": "^7.25.2",
+    "@babel/node": "^7.25.0",
+    "@babel/preset-env": "^7.25.4",
     "chai": "^5.1.1",
     "mocha": "^10.7.3",
     "supertest": "^7.0.0"
