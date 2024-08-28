@@ -1,4 +1,4 @@
-# Project Name: Bookify API
+## Bookify API
 
 ## Description:
 A RESTful API for managing books, authors, and genres.
