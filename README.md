@@ -28,14 +28,27 @@ Make API requests using your preferred HTTP client. For example, to get a list o
 /books: Get a list of books.
 /books/:id: Get a specific book by ID.
 /authors: Get a list of authors.
+/authors: Get a list of authors.
+/authors/:id: Get a specific author by ID.
 /genres: Get a list of genres.
+/genres/:id: Get a specific genre by ID.
+/users/register: Register a new user.
+/users/login: Login a user.
+/reviews: Get a list of reviews.
 // ... other endpoints ...
 ```
+### Test
+
+Run tests: ```npm test```
+
+
 ### Data Structure:
 ```
 Books: title, author(s), publication date, genre(s), description.
 Authors: name, biography.
 Genres: name.
+Users: username, password, role, wishlist.
+Reviews: user, book, rating, comment.
 ```
 
 ### Contributing:
