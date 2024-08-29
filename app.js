@@ -11,6 +11,14 @@ const port = 3000;
 
 app.use(express.json());
 
+start = async () => {
+  try {
+    require('dotenv').config();
+  } catch (error) {
+    console.log('dotenv not found');
+  } 
+}
+
 mongoose.connect('mongodb://localhost:27017/bookify', { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.use('/books', bookRoutes);
