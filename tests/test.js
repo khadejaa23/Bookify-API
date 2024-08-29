@@ -1,119 +1,78 @@
-const request = require('supertest');
-const express = require('express');
-const app = express();
 const chai = require('chai');
-const expect = chai.expect;
+const chaiHttp = require('chai-http');
+const app = require('../app'); // Adjust the path to your app.js file
+const User = require('../models/user');
+const Book = require('../models/book');
 
-app.use(express.json());
+const { expect } = chai;
+chai.use(chaiHttp);
 
-let books = [];
+describe('Authentication and Authorization', () => {
+  let token;
 
-// Routes (same as in your app.js)
-app.get('/books', (req, res) => {
-  res.json(books);
-});
-
-app.get('/books/:id', (req, res) => {
-  const book = books.find(b => b.id === parseInt(req.params.id));
-  if (!book) return res.status(404).send('Book not found');
-  res.json(book);
-});
-
-app.post('/books', (req, res) => {
-  const book = {
-    id: books.length + 1,
-    title: req.body.title,
-    author: req.body.author
-  };
-  books.push(book);
-  res.status(201).json(book);
-});
-
-app.put('/books/:id', (req, res) => {
-  const book = books.find(b => b.id === parseInt(req.params.id));
-  if (!book) return res.status(404).send('Book not found');
-
-  book.title = req.body.title;
-  book.author = req.body.author;
-  res.json(book);
-});
-
-app.delete('/books/:id', (req, res) => {
-  const bookIndex = books.findIndex(b => b.id === parseInt(req.params.id));
-  if (bookIndex === -1) return res.status(404).send('Book not found');
-
-  books.splice(bookIndex, 1);
-  res.status(204).send();
-});
-
-// Tests
-describe('Book API', () => {
-  it('should get all books', (done) => {
-    request(app)
-      .get('/books')
-      .expect(200)
-      .end((err, res) => {
-        if (err) return done(err);
-        expect(res.body).to.be.an('array');
-        done();
-      });
+  before(async () => {
+    // Clean up the database before running tests
+    await User.deleteMany({});
+    await Book.deleteMany({});
   });
 
-  it('should create a new book', (done) => {
-    request(app)
-      .post('/books')
-      .send({ title: 'New Book', author: 'Author' })
-      .expect(201)
-      .end((err, res) => {
-        if (err) return done(err);
-        expect(res.body).to.have.property('id');
-        expect(res.body).to.have.property('title', 'New Book');
-        expect(res.body).to.have.property('author', 'Author');
-        done();
-      });
+  describe('POST /users/register', () => {
+    it('should register a new user', (done) => {
+      chai.request(app)
+        .post('/users/register')
+        .send({ username: 'testuser', password: 'password' })
+        .end((err, res) => {
+          expect(res).to.have.status(201);
+          expect(res.body).to.have.property('_id');
+          done();
+        });
+    });
   });
 
-  it('should get a book by id', (done) => {
-    const book = { id: 1, title: 'Book 1', author: 'Author 1' };
-    books.push(book);
-    request(app)
-      .get('/books/1')
-      .expect(200)
-      .end((err, res) => {
-        if (err) return done(err);
-        expect(res.body).to.have.property('id', 1);
-        expect(res.body).to.have.property('title', 'Book 1');
-        expect(res.body).to.have.property('author', 'Author 1');
-        done();
-      });
+  describe('POST /users/login', () => {
+    it('should login and return a token', (done) => {
+      chai.request(app)
+        .post('/users/login')
+        .send({ username: 'testuser', password: 'password' })
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res.body).to.have.property('token');
+          token = res.body.token;
+          done();
+        });
+    });
   });
 
-  it('should update a book by id', (done) => {
-    const book = { id: 2, title: 'Book 2', author: 'Author 2' };
-    books.push(book);
-    request(app)
-      .put('/books/2')
-      .send({ title: 'Updated Book 2', author: 'Updated Author 2' })
-      .expect(200)
-      .end((err, res) => {
-        if (err) return done(err);
-        expect(res.body).to.have.property('id', 2);
-        expect(res.body).to.have.property('title', 'Updated Book 2');
-        expect(res.body).to.have.property('author', 'Updated Author 2');
-        done();
-      });
-  });
+  describe('Protected routes', () => {
+    it('should not allow access to protected route without token', (done) => {
+      chai.request(app)
+        .get('/books')
+        .end((err, res) => {
+          expect(res).to.have.status(401);
+          done();
+        });
+    });
 
-  it('should delete a book by id', (done) => {
-    const book = { id: 3, title: 'Book 3', author: 'Author 3' };
-    books.push(book);
-    request(app)
-      .delete('/books/3')
-      .expect(204)
-      .end((err) => {
-        if (err) return done(err);
-        expect(books.find(b => b.id === 3)).to.be.undefined;
-        done();
-      });
+    it('should allow access to protected route with token', (done) => {
+      chai.request(app)
+        .get('/books')
+        .set('Authorization', `Bearer ${token}`)
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          done();
+        });
+    });
+
+    it('should allow admin to create a book', (done) => {
+      chai.request(app)
+        .post('/books')
+        .set('Authorization', `Bearer ${token}`)
+        .send({ ISBN: '1234567890', title: 'New Book', authors: [], genres: [], publicationDate: '2023-01-01', description: 'A new book', imageUrl: 'http://example.com/image.jpg' })
+        .end((err, res) => {
+          expect(res).to.have.status(201);
+          expect(res.body).to.have.property('_id');
+          done();
+        });
+    });
   });
 });
