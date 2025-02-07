@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bookRoutes = require('./routes/bookRoutes');
@@ -7,26 +8,30 @@ const userRoutes = require('./routes/userRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
-start = async () => {
+const start = async () => {
   try {
-    require('dotenv').config();
+    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/bookify', {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    });
+    console.log('Connected to MongoDB');
+    
+    app.use('/books', bookRoutes);
+    app.use('/authors', authorRoutes);
+    app.use('/genres', genreRoutes);
+    app.use('/users', userRoutes);
+    app.use('/reviews', reviewRoutes);
+
+    app.listen(port, () => {
+      console.log(`Bookify API listening at http://localhost:${port}`);
+    });
   } catch (error) {
-    console.log('dotenv not found');
-  } 
-}
+    console.error('Failed to connect to MongoDB', error);
+  }
+};
 
-mongoose.connect('mongodb://localhost:27017/bookify', { useNewUrlParser: true, useUnifiedTopology: true });
-
-app.use('/books', bookRoutes);
-app.use('/authors', authorRoutes);
-app.use('/genres', genreRoutes);
-app.use('/users', userRoutes);
-app.use('/reviews', reviewRoutes);
-
-app.listen(port, () => {
-  console.log(`Bookify API listening at http://localhost:${port}`);
-});
+start();
