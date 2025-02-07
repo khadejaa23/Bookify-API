@@ -2,7 +2,7 @@
   "name": "@bookify/api",
   "version": "1.0.0",
   "description": "## Description: A RESTful API for managing books, authors, and genres.",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "mocha test.js",
     "start": "nodemon ./app.js --exec babel-node"
