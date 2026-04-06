@@ -18,24 +18,27 @@
     "url": "https://github.com/khadejaa23/Bookify-API/issues"
   },
   "homepage": "https://github.com/khadejaa23/Bookify-API#readme",
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "dependencies": {
-    "bcrypt": "^5.1.1",
-    "body-parser": "^1.20.3",
-    "dotenv": "^16.4.5",
-    "express": "^4.22.0",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.9.5",
-    "nodemon": "^3.1.4"
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.0",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.0",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.0.0",
+    "nodemon": "^3.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.24.8",
-    "@babel/core": "^7.25.2",
-    "@babel/node": "^7.25.0",
-    "@babel/preset-env": "^7.25.4",
-    "@babel/preset-react": "^7.24.7",
-    "chai": "^5.1.1",
-    "mocha": "^10.7.3",
-    "supertest": "^7.0.0"
+    "@babel/cli": "^7.20.0",
+    "@babel/core": "^7.20.0",
+    "@babel/node": "^7.20.0",
+    "@babel/preset-env": "^7.20.0",
+    "@babel/preset-react": "^7.20.0",
+    "chai": "^4.0.0",
+    "mocha": "^10.0.0",
+    "supertest": "^6.0.0"
   },
   "directories": {
     "test": "tests"
